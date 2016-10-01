@@ -1,19 +1,74 @@
-<h3>Records in db:</h3>
+<head>
+    <meta charset="utf-8" />
+    <title>Multi Select Buttons Template | PrepBootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+</head>
+<body>
 
-<table class="table table-striped">
-<thead>
-  <tr>
-    <th>id</th>
-    <th>Name</th>
-  </tr>
-</thead>
-<tbody>
-  <% @results.each do |row| %>
-        <tr>
-          <th><%= row['id'] %></th>
-          <td><a href=<%=row['next_questions_id']%>+2><%= row['question_text'] %></a></td>      
-          <td style="background-color: <%= row['color'] %>"><%= row['color'] %></td>
-        </tr>
-  <% end %>
-</tbody>
-</table>
+<div class="container">
+
+<!-- Multi Select Buttons - START -->
+<div class="container">
+    <h2>Выбор ситуации</h2>
+    <div class="row">
+        <br>
+        <div class="form-group">
+            <div class="col-sm-12 col-md-12 col-lg-12">                
+                <i class="fa fa-search fa-2x pull-left searchicon"></i><input type="search" class="form-control" id="search" placeholder="Filter items...">
+            </div>
+        </div>
+    </div> 
+    
+       
+</div>
+
+<style>
+#search {
+    width:90%;
+}
+
+.searchicon {
+    color:#5CB85C;
+}
+
+.items-collection{
+    margin:20px 0 0 0;
+}
+.items-collection label.btn-default.active{
+    background-color:#007ba7;
+    color:#FFF;
+}
+.items-collection label.btn-default{
+    width:90%;
+    border:1px solid #305891;
+    margin:5px; 
+    border-radius: 17px;
+    color: #305891;
+}
+.items-collection label .itemcontent{
+    width:100%;
+}
+.items-collection .btn-group{
+    width:90%
+}
+</style>
+
+<script>
+$(function () {
+    $('#search').on('keyup', function () {
+        var pattern = $(this).val();
+        $('.items-collection .items').hide();
+        $('.items-collection .items').filter(function () {
+            return $(this).text().match(new RegExp(pattern, 'i'));
+        }).show();
+    });
+});
+
+</script>
+<!-- Multi Select Buttons - END -->
+
+</div>
+
+</body>
