@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'sinatra'
-require 'sinatra/reloader'
 require 'mysql2'
 
 client = Mysql2::Client.new(
