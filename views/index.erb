@@ -19,8 +19,19 @@
                 <i class="fa fa-search fa-2x pull-left searchicon"></i><input type="search" class="form-control" id="search" placeholder="Filter items...">
             </div>
         </div>
-    </div> 
-    
+    </div>
+
+    <div>
+    <div style="padding: 20px;" class="row">
+      <div class=" col-sm-6">
+          <% @themes.each do |theme|%>
+            <div class="list-group">
+              <a href=<%=theme['id'] %> class="list-group-item"><%=theme['question_text'] %></a>
+            </div>
+          <% end %>
+      </div>
+      <div class="col-sm-7"></div>
+    </div>
        
 </div>
 
@@ -59,8 +70,8 @@
 $(function () {
     $('#search').on('keyup', function () {
         var pattern = $(this).val();
-        $('.items-collection .items').hide();
-        $('.items-collection .items').filter(function () {
+        $('.list-group .list-group-item').hide();
+        $('.list-group .list-group-item').filter(function () {
             return $(this).text().match(new RegExp(pattern, 'i'));
         }).show();
     });

@@ -11,6 +11,6 @@ client = Mysql2::Client.new(
 	)
 
 get '/' do
-		@results = client.query("SELECT * FROM questions WHERE question_id='0'")
+		@themes = client.query("SELECT * FROM questions")
 		erb :index
 end
