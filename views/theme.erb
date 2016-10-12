@@ -11,10 +11,9 @@
 <div class="container">
 <h4>History:</h4>
 
-<div style="padding: 10px;" class="row">
-
+<div class="row">
       <!-- history panel -->
-      <div style="padding: 40px;" class=" col-xs-4">
+      <div style="padding-top: 40px;" class=" col-sm-4">
             <div class="list-group">
               <% @history.each_with_index do |theme, index|%>
                   <a href="<%=index %>" class="list-group-item list-group-item-action"><%=theme%></a>
@@ -23,7 +22,7 @@
       </div>
 
       <!-- questions form -->
-      <div class="col-xs-8">
+      <div class="col-sm-8">
 
       <p><%= @el['question_text']%></p>
       <form action="/" method="post">
@@ -43,6 +42,7 @@
             <% end %>
           </div>
         </div>
+        <p></p>
         <button type="submit" class="btn btn-success">Далее -></button>
       </form>
 

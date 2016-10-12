@@ -1,6 +1,5 @@
 <head>
     <meta charset="utf-8" />
-    <title>Multi Select Buttons Template | PrepBootstrap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" /> -->
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
@@ -9,7 +8,6 @@
 
 <div class="container-fluid">
 
-<!-- Multi Select Buttons - START -->
 <div class="container">
     <h2>Выбор ситуации</h2>
     <div class="row">
@@ -23,14 +21,16 @@
 
     <div>
     <div style="padding: 10px;" class="row">
-      <div class=" col-xs-4">
+      <div class="col-xs-4">
+        <div class="cat">
             <div class="list-group">
               <% @themes.each do |theme|%>
                   <a href="<%=theme['id'] %>" class="list-group-item list-group-item-action">
-                      <span class="tag tag-default tag-pill pull-xs-right">15</span>
+                      <span class="tag tag-default tag-pill pull-xs-right"><%=@themes.size%></span>
                       <%=theme['theme_text'] %></a>
               <% end %>
             </div>
+        </div>
       </div>
 
       <!-- <div class="col-xs-7"></div> -->
