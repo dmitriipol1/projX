@@ -1,47 +1,84 @@
-<h3>Records in db:</h3>
+<head>
+    <meta charset="utf-8" />
+    <title>Multi Select Buttons Template | PrepBootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script> -->
+</head>
 
-<table class="table table-striped">
-<thead>
-  <tr>
-    <th>id</th>
-    <th>Name</th>
-  </tr>
-</thead>
-<tbody>
-  <% @results.each do |row| %>
-        <tr>
-          <th><%= row['id'] %></th>
-          <td><a href=<%=row['next_questions_id']%>+2><%= row['question_text'] %></a></td>      
-          <td style="background-color: <%= row['color'] %>"><%= row['color'] %></td>
-        </tr>
-  <% end %>
-</tbody>
-</table>
-=======
-<h3>Тема № </h3>
-<p></p>
-
+<body>
 <div class="container">
-    <div class="row">
-        <div class="col-sm-5">
-          <div id="left" class="list-group">
-          
-          </div>
-        </div>
-        <div class="col-sm-7">
-          <div id="right" class="list-group">
+<h4>History:</h4>
 
-            <% @results.each do |row| %>
-            <% if row['question_id'].to_i == 0 %>
-              <a next_questions_id=<%= row['next_questions_id'] %> zz="test" class="list-group-item"><%= row['question_text'] %></a> 
+<div style="padding: 10px;" class="row">
+
+      <!-- history panel -->
+      <div style="padding: 40px;" class=" col-xs-4">
+            <div class="list-group">
+              <% @history.each_with_index do |theme, index|%>
+                  <a href="<%=index %>" class="list-group-item list-group-item-action"><%=theme%></a>
+              <% end %>
+            </div>
+      </div>
+
+      <!-- questions form -->
+      <div class="col-xs-8">
+
+      <p><%= @el['question_text']%></p>
+      <form action="/" method="post">
+        <div class="custom-controls-stacked">
+          <div name="ans" class="list-group">
+            <%  if @answers != nil then @answers.each do |row| %>
+              <% if row['question_id'].to_i == 0 %>
+              <li class="list-group-item">
+                <label class="custom-control custom-radio">
+                  <input value=<%= row['id']%> id="radioStacked1" name="radio" type="radio" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description"><%= row['answer_text'] %></span>
+                </label>  
+              </li>
+              <% end %>
             <% end %>
-          <% end %>
-
+            <% end %>
           </div>
         </div>
+        <button type="submit" class="btn btn-success">Далее -></button>
+      </form>
+
+
+      </div>
     </div>
-</div>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
+</body>
+
+<style>
+#search {
+    width:90%;
+}
+
+.searchicon {
+    color:#5CB85C;
+}
+
+.items-collection{
+    margin:20px 0 0 0;
+}
+.items-collection label.btn-default.active{
+    background-color:#007ba7;
+    color:#FFF;
+}
+.items-collection label.btn-default{
+    width:90%;
+    border:1px solid #305891;
+    margin:5px; 
+    border-radius: 17px;
+    color: #305891;
+}
+.items-collection label .itemcontent{
+    width:100%;
+}
+.items-collection .btn-group{
+    width:90%
+}
+</style>

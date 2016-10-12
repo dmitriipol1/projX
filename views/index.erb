@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
 <!-- Multi Select Buttons - START -->
 <div class="container">
@@ -22,15 +22,19 @@
     </div>
 
     <div>
-    <div style="padding: 20px;" class="row">
-      <div class=" col-sm-6">
-          <% @themes.each do |theme|%>
+    <div style="padding: 10px;" class="row">
+      <div class=" col-xs-4">
             <div class="list-group">
-              <a href=<%=theme['id'] %> class="list-group-item"><%=theme['question_text'] %></a>
+              <% @themes.each do |theme|%>
+                  <a href="<%=theme['id'] %>" class="list-group-item list-group-item-action">
+                      <span class="tag tag-default tag-pill pull-xs-right">15</span>
+                      <%=theme['theme_text'] %></a>
+              <% end %>
             </div>
-          <% end %>
       </div>
-      <div class="col-sm-7"></div>
+
+      <!-- <div class="col-xs-7"></div> -->
+    
     </div>
        
 </div>
@@ -76,6 +80,7 @@ $(function () {
         }).show();
     });
 });
+
 
 </script>
 <!-- Multi Select Buttons - END -->
