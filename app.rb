@@ -16,15 +16,27 @@ get '/' do
 end
 
 get '/:theme_id' do
-		theme_id = params[:theme_id]
-		@history = ['first', 'second']
-		question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and layer = 1")
+		@theme_id = params[:theme_id]
+		@history = ['1']
+		question = client.query("SELECT * FROM questions where theme_id = #{@theme_id} and layer = 1")
 		@el = question.first
-		@answers = client.query("SELECT * FROM answers where answers_group = #{@el['answers_id']}")
+		@answers = client.query("SELECT * FROM answers where layer = #{@el['layer']}")
 		erb :theme
 end
 
+post '/:theme_id' do
+		@theme_id = params[:theme_id]
+		question_id = params[:radio]
+		question_text = params[:question_text]
+		@history = Array.new [question_text + '<br>' + question_id]
+		# @history.push(question_text)
+		question = client.query("SELECT * FROM questions where question_id = #{question_id}")
+		@el = question.first
+		if @el != nil 
+			@answers = client.query("SELECT * FROM answers where layer = #{@el['layer']}")
+		end
+		erb :theme
 
-post '/' do
-	erb :show
+	# erb :show
 end
+

@@ -1,11 +1,7 @@
-<head>
+<!-- <head>
     <meta charset="utf-8" />
-    <title>Multi Select Buttons Template | PrepBootstrap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" /> -->
-    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script> -->
-</head>
+</head> -->
 
 <body>
 <div class="container">
@@ -13,26 +9,45 @@
 
 <div class="row">
       <!-- history panel -->
+      
+
+      <% if @history != nil %>
       <div style="padding-top: 40px;" class=" col-sm-4">
             <div class="list-group">
               <% @history.each_with_index do |theme, index|%>
-                  <a href="<%=index %>" class="list-group-item list-group-item-action"><%=theme%></a>
+                  <!-- <a href="<%=index %>" class="list-group-item list-group-item-action"><%=theme%></a> -->
+
+                  <script type="text/javascript">
+                      document.write('<a href="s" class="list-group-item list-group-item-action">', sessionStorage.history, '</a>');
+                  </script>
+
               <% end %>
             </div>
       </div>
+      <% end %>
 
       <!-- questions form -->
       <div class="col-sm-8">
 
-      <p><%= @el['question_text']%></p>
-      <form action="/" method="post">
+      <% if @el != nil %>
+        <p><%= @el['question_text']%></p>
+      <form action="/<%=@theme_id%>" method="post">
         <div class="custom-controls-stacked">
           <div name="ans" class="list-group">
+                  <input type="hidden" name="question_text" value="<%= @el['question_text'] %>"> 
+                  
+                  <script type="text/javascript">
+                    if (sessionStorage.history != null){ 
+                      sessionStorage.history = sessionStorage.history + '<br>' + "<%= @el['question_text'] %>"; 
+                    } else{
+                    sessionStorage.history = "<%= @el['question_text'] %>";};
+                  </script>
+
             <%  if @answers != nil then @answers.each do |row| %>
               <% if row['question_id'].to_i == 0 %>
               <li class="list-group-item">
                 <label class="custom-control custom-radio">
-                  <input value=<%= row['id']%> id="radioStacked1" name="radio" type="radio" class="custom-control-input">
+                  <input value=<%= row['next_question_id']%> id="radioStacked1" name="radio" type="radio" class="custom-control-input">
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description"><%= row['answer_text'] %></span>
                 </label>  
@@ -45,6 +60,8 @@
         <p></p>
         <button type="submit" class="btn btn-success">Далее -></button>
       </form>
+      <% end %>
+
 
 
       </div>
