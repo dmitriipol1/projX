@@ -1,89 +1,69 @@
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
 </head>
 <body>
 
 <div class="container-fluid">
 
-<div class="container">
+  <div class="container">
     <h2>Выбор ситуации</h2>
     <div class="row">
-        <br>
-        <div class="form-group">
-            <div class="col-sm-12 col-md-12 col-lg-12">                
-                <i class="fa fa-search fa-2x pull-left searchicon"></i><input type="search" class="form-control" id="search" placeholder="Filter items...">
-            </div>
+      <br>
+      <div class="form-group">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <i class="fa fa-search fa-2x pull-left searchicon"></i><input type="search" class="form-control" id="search" placeholder="Filter items...">
         </div>
+      </div>
     </div>
 
     <div>
-    <div style="padding: 10px;" class="row">
-      <div class="col-xs-4">
-        <div class="cat">
+      <div style="padding: 10px;" class="row">
+        <div class="col-xs-4">
+          <div class="cat">
             <div class="list-group">
-              <% @themes.each do |theme|%>
+              <% @themes.each do |theme| %>
                   <a href="<%= theme['first_question_id'] %>" class="list-group-item list-group-item-action">
-                      <span class="tag tag-default tag-pill pull-xs-right"><%=@themes.size%></span>
-                      <%=theme['theme_text'] %></a>
+                    <span class="tag tag-default tag-pill pull-xs-right"><%= @themes.size %></span>
+                    <%= theme['theme_text'] %></a>
               <% end %>
             </div>
+          </div>
         </div>
+
+        <!-- <div class="col-xs-7"></div> -->
+
       </div>
 
-      <!-- <div class="col-xs-7"></div> -->
-    
     </div>
-       
-</div>
 
-<style>
-#search {
-    width:90%;
-}
+    <style>
+      #search {
+        width: 90%;
+      }
 
-.searchicon {
-    color:#5CB85C;
-}
+      .searchicon {
+        color: #5CB85C;
+      }
+    </style>
 
-.items-collection{
-    margin:20px 0 0 0;
-}
-.items-collection label.btn-default.active{
-    background-color:#007ba7;
-    color:#FFF;
-}
-.items-collection label.btn-default{
-    width:90%;
-    border:1px solid #305891;
-    margin:5px; 
-    border-radius: 17px;
-    color: #305891;
-}
-.items-collection label .itemcontent{
-    width:100%;
-}
-.items-collection .btn-group{
-    width:90%
-}
-</style>
-
-<script>
-$(function () {
-    $('#search').on('keyup', function () {
-        var pattern = $(this).val();
-        $('.list-group .list-group-item').hide();
-        $('.list-group .list-group-item').filter(function () {
+    <script>
+      $(function () {
+        $('#search').on('keyup', function () {
+          var pattern = $(this).val();
+          $('.list-group .list-group-item').hide();
+          $('.list-group .list-group-item').filter(function () {
             return $(this).text().match(new RegExp(pattern, 'i'));
-        }).show();
-    });
-});
+          }).show();
+        });
+      });
 
 
-</script>
-<!-- Multi Select Buttons - END -->
+    </script>
+    <!-- Multi Select Buttons - END -->
 
+  </div>
 </div>
- 
+
 </body>

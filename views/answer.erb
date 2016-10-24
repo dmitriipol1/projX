@@ -1,0 +1,42 @@
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+<div class="container">
+  <h4>History:</h4>
+
+  <div class="row">
+    <!-- history panel -->
+    <% if @history != nil %>
+        <div style="padding-top: 40px;" class=" col-sm-4">
+          <div class="list-group">
+            <% @history.each do |item| %>
+                <a href="<%= item['link'] %>" class="list-group-item list-group-item-action"><%= item['answer_to_panel'] %></a>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="col-sm-8">
+      <% # noinspection RubyResolve
+         if @el != nil %>
+          <p><%= @el['question_text'] %></p>
+          <div class="custom-controls-stacked">
+            <div class="list-group">
+              <input type="hidden" name="question_text" value="<%= @el['question_text'] %>">
+              <% if @answers != nil
+                   row = @answers.first %>
+                  <li class="list-group-item">
+                    <p><%= row['answer_text'] %>"</p>
+                  </li>
+              <% end %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+</body>
