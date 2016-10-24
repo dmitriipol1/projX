@@ -25,12 +25,12 @@ get '/:path' do
 	# init and save history to the session pool
 	if @path.size == 1
 		question = client.query('SELECT * FROM questions where question_id = 0')
-		@answers = client.query('SELECT * FROM answers where layer = 1')
+		@answers = client.query('SELECT * FROM answers where layer = 1 and branch = 1')
 
 		item = {'id' => '0',
-						'answer_to_panel' => 'название категории',
-						'link' => '0',
-						'hint' => ''}
+            'answer_to_panel' => 'название категории',
+            'link' => '0',
+            'hint' => ''}
 		@history = [item]
 	else
 		@history = []
