@@ -7,7 +7,9 @@ client = Mysql2::Client.new(
 		:host => '85.93.128.108',
 		:username => 'puser',
 		:password => 'Puser12',
-		:database => 'projx'
+		:database => 'projx',
+		:encoding => 'utf8',
+		:reconnect => true
 	)
 
 use Rack::Session::Pool
