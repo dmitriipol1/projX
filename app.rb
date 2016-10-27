@@ -25,19 +25,18 @@ get '/:theme_id/:path' do
   # layer = @path.size
   branch = @path[0]
 
+  category = client.query("select * from theme where theme_id = #{theme_id}").first
+  item = {'id' => '0',
+          'answer_to_panel' => category['theme_text'],
+          'link' => '0',
+          'hint' => ''}
+  @history = [item]
+
   # init and save history to the session pool
   if @path.size == 1
     question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = 0 ")
     @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = 1 and branch = 1")
-    category = client.query("select * from theme where theme_id = #{theme_id}").first
-
-    item = {'id' => '0',
-            'answer_to_panel' => category['theme_text'],
-            'link' => '0',
-            'hint' => ''}
-    @history = [item]
   else
-    @history = []
     question_id = @path[0..(@path.size-2)]
     question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = #{question_id}")
     @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = #{question.first['layer']} and branch = #{branch}")
