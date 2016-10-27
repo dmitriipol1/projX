@@ -25,11 +25,11 @@
           <p><%= @el['question_text'] %></p>
           <div class="custom-controls-stacked">
             <div class="list-group">
-              <input type="hidden" name="question_text" value="<%= @el['question_text'] %>">
+              <input type="hidden" name="question_text" value=<%= @el['question_text'] %>>
               <% if @answers != nil
                    row = @answers.first %>
                   <li class="list-group-item">
-                    <p><%= row['answer_text'] %>"</p>
+                    <p><%= row['answer_text'] %></p>
                   </li>
               <% end %>
             </div>

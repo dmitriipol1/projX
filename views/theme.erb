@@ -28,7 +28,7 @@
             <div class="custom-controls-stacked">
               <div name="ans" class="list-group">
                 <input type="hidden" name="question_text" value="<%= @el['question_text'] %>">
-                <% if @answers != nil then
+                <% if @answers != nil
                      @answers.each do |row| %>
                         <% if row['question_id'].to_i == 0 %>
                             <li class="list-group-item">
@@ -45,22 +45,13 @@
                         <% end %>
                     <% end %>
                     <p></p>
-                    <button type="button" style="" name="button_next" onclick="send()" class="btn btn-success">Далее
-                      ->
-                    </button>
+                    <button type="button" style="" name="button_next" onclick="send()" class="btn btn-success">Далее-></button>
                 <% end %>
               </div>
             </div>
-
-            <script type="text/javascript">
-              var form = document.next;
-            </script>
-
           </form>
       <% end %>
-
     </div>
-
   </div>
 </div>
 </body>
@@ -69,16 +60,8 @@
   function send() {
     var form = document.next;
     var data = form.radio.value.match(/\d/)
-    // if (data[0] != 0)
-    // {
     form.action = data;
     form.submit();
-    // }
-    // else{
-    // alert(data[0]);
-    // var butt = document.button_next;
-    // butt.style = "display: none;";
-    // }
   }
 </script>
 
