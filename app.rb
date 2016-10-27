@@ -22,16 +22,17 @@ end
 get '/:theme_id/:path' do
   @path = params[:path]
   theme_id = params[:theme_id]
-  layer = @path.size
+  # layer = @path.size
   branch = @path[0]
 
   # init and save history to the session pool
   if @path.size == 1
     question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = 0 ")
     @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = 1 and branch = 1")
+    category = client.query("select * from theme where theme_id = #{theme_id}").first
 
     item = {'id' => '0',
-            'answer_to_panel' => 'название категории',
+            'answer_to_panel' => category['theme_text'],
             'link' => '0',
             'hint' => ''}
     @history = [item]
@@ -39,7 +40,7 @@ get '/:theme_id/:path' do
     @history = []
     question_id = @path[0..(@path.size-2)]
     question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = #{question_id}")
-    @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = #{layer} and branch = #{branch}")
+    @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = #{question.first['layer']} and branch = #{branch}")
     question_id.split('').each_with_index do |chr, index|
       answer = client.query("SELECT * FROM answers where theme_id = #{theme_id} and answer_id = #{chr.to_i} and layer = #{index+1} and branch = #{branch}")
       a = answer.first
@@ -79,7 +80,9 @@ post '/:theme_id/:path' do
             'answer_to_panel' => @text_to_panel,
             'link' => @id,
             'hint' => @hint_panel}
-    @history.push(item)
+    if item != nil
+      @history.push(item)
+    end
     session[:history] = @history
 
     question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = #{@next_question}")
