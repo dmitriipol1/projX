@@ -24,7 +24,7 @@
           <div class="cat">
             <div class="list-group">
               <% @themes.each do |theme| %>
-                  <a href="<%= theme['theme_id'] %>/0" class="list-group-item list-group-item-action">
+                  <a href="/<%= @category_id %>/<%= theme['theme_id'] %>/0" class="list-group-item list-group-item-action">
                     <!--<span class="tag tag-default tag-pill pull-xs-right"><%= @themes.size %></span>-->
                     <%= theme['theme_text'] %></a>
               <% end %>

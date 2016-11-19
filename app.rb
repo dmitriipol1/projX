@@ -15,33 +15,42 @@ client = Mysql2::Client.new(
 use Rack::Session::Pool
 
 get '/' do
-  @themes = client.query('SELECT * FROM theme')
+  @cats = client.query('SELECT * FROM category')
+
+  erb :cat
+end
+
+get '/:category_id' do
+  @category_id = params[:category_id]
+  @themes = client.query("SELECT * FROM theme where category_id=#{@category_id}")
+
   erb :index
 end
 
-get '/:theme_id/:path' do
+get '/:category_id/:theme_id/:path' do
   @path = params[:path]
   theme_id = params[:theme_id]
+  category_id = params[:category_id]
   # layer = @path.size
   branch = @path[0]
 
-  category = client.query("select * from theme where theme_id = #{theme_id}").first
+  theme = client.query("select * from theme where category_id=#{category_id} and theme_id = #{theme_id}").first
   item = {'id' => '0',
-          'answer_to_panel' => category['theme_text'],
+          'answer_to_panel' => theme['theme_text'],
           'link' => '0',
           'hint' => ''}
   @history = [item]
 
   # init and save history to the session pool
   if @path.size == 1
-    question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = 0 ")
-    @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = 1 and branch = 1")
+    question = client.query("SELECT * FROM questions where category_id=#{category_id} and theme_id = #{theme_id} and question_id = 0 ")
+    @answers = client.query("SELECT * FROM answers where category_id=#{category_id} and theme_id = #{theme_id} and layer = 1 and branch = 1")
   else
     question_id = @path[0..(@path.size-2)]
-    question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = #{question_id}")
-    @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = #{question.first['layer']} and branch = #{branch}")
+    question = client.query("SELECT * FROM questions where category_id=#{category_id} and theme_id = #{theme_id} and question_id = #{question_id}")
+    @answers = client.query("SELECT * FROM answers where category_id=#{category_id} and theme_id = #{theme_id} and layer = #{question.first['layer']} and branch = #{branch}")
     question_id.split('').each_with_index do |chr, index|
-      answer = client.query("SELECT * FROM answers where theme_id = #{theme_id} and answer_id = #{chr.to_i} and layer = #{index+1} and branch = #{branch}")
+      answer = client.query("SELECT * FROM answers where category_id=#{category_id} and theme_id = #{theme_id} and answer_id = #{chr.to_i} and layer = #{index+1} and branch = #{branch}")
       a = answer.first
       # a = {}
       # answer.each do |ans|
@@ -62,9 +71,11 @@ get '/:theme_id/:path' do
   erb :theme
 end
 
-post '/:theme_id/:path' do
+post '/:category_id/:theme_id/:path' do
   # @theme_id = params[:path]
   theme_id = params[:theme_id]
+  category_id = params[:category_id]
+
   if params[:radio] != nil
     data = params[:radio].split('text')
     @id = data[0]
@@ -84,10 +95,10 @@ post '/:theme_id/:path' do
     end
     session[:history] = @history
 
-    question = client.query("SELECT * FROM questions where theme_id = #{theme_id} and question_id = #{@next_question}")
+    question = client.query("SELECT * FROM questions where category_id=#{category_id} and theme_id = #{theme_id} and question_id = #{@next_question}")
     @el = question.first
     if @el != nil
-      @answers = client.query("SELECT * FROM answers where theme_id = #{theme_id} and layer = #{@el['layer']} and branch = #{@branch}")
+      @answers = client.query("SELECT * FROM answers where category_id=#{category_id} and theme_id = #{theme_id} and layer = #{@el['layer']} and branch = #{@branch}")
       if !@el['layer'].to_s.include? '99'
         erb :theme
       else
