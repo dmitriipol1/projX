@@ -1,16 +1,17 @@
 <div class="container-fluid">
   <div class="container">
     <div>
-      <div style="padding: 10px;" class="row">
-        <div class="col-xs-4">
-          <div class="cat">
-            <div class="list-group">
-              <% @cats.each do |theme| %>
-                  <a href="<%= theme['category_id'] %>" class="list-group-item list-group-item-action">
-                    <%= theme['category_text'] %></a>
-              <% end %>
+      <div style="padding: 25px;" class="row">
+        <div class="list-group">
+          <% @cats.each do |category| %>
+            <div class="col-xs-4">
+              <div class="cat">
+                <a href="<%= category['category_id'] %>" class="list-group-item list-group-item-action">
+                <img src="/img/<%= category['category_id'] %>.svg" align="right" alt="icon" height=40 width=40><br><%= category['category_text'] %></a>
+                <br>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
